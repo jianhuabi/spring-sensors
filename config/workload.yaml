@@ -4,14 +4,22 @@ metadata:
   name: spring-sensors
   labels:
     app.kubernetes.io/name: spring-sensors
-    app.tanzu.vmware.com/workload-type: web-app
+    app.tanzu.vmware.com/workload-type: web
+    app.kubernetes.io/part-of: spring-sensors
 spec:
   source:
     git:
       # update when code is pushed to a new location
-      url: $GITREPO
+      url: https://github.com/jianhuabi/spring-sensors
       ref:
         branch: main
+  serviceClaims:
+  - name: rmq
+    ref:
+      apiVersion: rabbitmq.com/v1beta1
+      kind: RabbitmqCluster
+      name: rmq-1
+      namespace: service-offering
   env:
   - name: TESTVAR
     value: aoeu
